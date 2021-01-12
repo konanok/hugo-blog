@@ -1,0 +1,5 @@
+baseURL = "https://konanok.github.io"
+languageCode = "zh-cn"
+title = "konanok's blog"
+
+theme = "ananke"
