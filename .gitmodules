@@ -1,0 +1,12 @@
+[submodule "themes/ananke"]
+	path = themes/ananke
+	url = https://github.com/budparr/gohugo-theme-ananke.git
+[submodule "public"]
+	path = public
+	url = https://github.com/konanok/konanok.github.io.git
+[submodule "content/posts"]
+	path = content/posts
+	url = https://github.com/konanok/notes.git
+[submodule "content/images"]
+	path = content/images
+	url = https://github.com/konanok/images.git
