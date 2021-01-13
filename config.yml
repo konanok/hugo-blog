@@ -1,0 +1,64 @@
+baseURL: "https://konanok.github.io"
+title: "迷宮の十字路"
+
+languageCode: zh
+defaultContentLanguage: zh
+defaultContentLanguageInSubdir: true
+
+theme: "my-hugo-PaperMod"
+paginate: 7
+enableInlineShortcodes: true
+enableRobotsTXT: true
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+params:
+  env: production
+  description: "konanok's blog"
+  author: konanok
+  ShowShareButtons: false
+  ShowReadingTime: true
+  defaultTheme: auto
+  displayFullLangName: true
+
+  homeInfoParams:
+    Title: "欢迎回来👏"
+    Content: >
+      Welcome to demo of hugo's theme PaperMod.
+      - **PaperMod** is a simple but fast and responsive theme with useful feature-set that enhances UX.
+  socialIcons:
+    - name: github
+      url: "https://github.com/adityatelange/hugo-PaperMod"
+    - name: email
+      url: "mailto:konanok@outlook.com"
+
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys: ["title", "permalink", "summary", "content"]
+
+menu:
+  main:
+    - name: 归档
+      url: /archives/
+      weight: 10
+    - name: 分类
+      url: /categories/
+      weight: 20
+    - name: 标签
+      url: /tags/
+      weight: 30
+    - name: 搜索
+      url: /search/
+      weight: 40
+    - name: 关于
+      url: /about/
+      weight: 50
