@@ -26,13 +26,12 @@ params:
   displayFullLangName: true
 
   homeInfoParams:
-    Title: "欢迎回来👏"
+    Title: "Hi friend 👏"
     Content: >
-      Welcome to demo of hugo's theme PaperMod.
-      - **PaperMod** is a simple but fast and responsive theme with useful feature-set that enhances UX.
+      Welcome to my blog.
   socialIcons:
     - name: github
-      url: "https://github.com/adityatelange/hugo-PaperMod"
+      url: "https://github.com/konanok"
     - name: email
       url: "mailto:konanok@outlook.com"
 
