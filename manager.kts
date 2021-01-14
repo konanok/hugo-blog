@@ -9,9 +9,9 @@ import kotlin.system.exitProcess
  * @author konanok<konanok@outlook.com>
  */
 
-const val name = "manager"   // 名称
-const val version = "v1.0.0" // 版本号
-const val synopsis =         // 帮助文本
+val name = "manager"   // 名称
+val version = "v1.0.0" // 版本号
+val synopsis =         // 帮助文本
 """
 Usage: $name <options> <command> <arguments>
 
@@ -179,10 +179,31 @@ fun printError(error: String) {
 
 
 /**
- * 在Shell环境下执行命令
+ * 标准输出流监听器
  */
-fun sh(init: VirtualShell.() -> Unit) {
-    VirtualShell(isQuiet).apply(init).execute()
+class StandardOutListener(
+    inputStream: InputStream
+): Runnable {
+
+    private val reader = BufferedReader(InputStreamReader(inputStream))
+
+    private var isRunning = true
+
+    override fun run() {
+        while (isRunning) {
+            var line: String?
+            if (reader.readLine().also { line = it } != null) {
+                printInfo(line!!)
+            } else {
+                isRunning = false
+            }
+        }
+        reader.close()
+    }
+
+    fun shutdown() {
+        isRunning = false
+    }
 }
 
 /**
@@ -196,7 +217,7 @@ class VirtualShell(
 ) {
 
     // 系统shell进程
-    private val shellProcess = Runtime.getRuntime().exec("/bin/sh")
+    private val shellProcess = Runtime.getRuntime().exec("/bin/zsh")
 
     private val commandWriter = BufferedWriter(OutputStreamWriter(shellProcess.outputStream))
 
@@ -244,29 +265,8 @@ class VirtualShell(
 }
 
 /**
- * 标准输出流监听器
+ * 在Shell环境下执行命令
  */
-class StandardOutListener(
-    inputStream: InputStream
-): Runnable {
-
-    private val reader = BufferedReader(InputStreamReader(inputStream))
-
-    private var isRunning = true
-
-    override fun run() {
-        while (isRunning) {
-            var line: String?
-            if (reader.readLine().also { line = it } != null) {
-                printInfo(line!!)
-            } else {
-                isRunning = false
-            }
-        }
-        reader.close()
-    }
-
-    fun shutdown() {
-        isRunning = false
-    }
+fun sh(init: VirtualShell.() -> Unit) {
+    VirtualShell(isQuiet).apply(init).execute()
 }
