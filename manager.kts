@@ -228,5 +228,5 @@ class VirtualShell(
  * 在Shell环境下执行命令
  */
 fun sh(init: VirtualShell.() -> Unit) {
-    VirtualShell().apply(init).execute()
+    VirtualShell(true).apply(init).execute()
 }
