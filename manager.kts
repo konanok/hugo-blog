@@ -46,7 +46,7 @@ fun createPost(title: String) {
     File("$draftsPath/${zonedDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE)}-$title.md").run {
         createNewFile()
         writeText(frontMatter)
-        println("create post: $absolutePath")
+        println("\u001B[33m创建文章: \u001B[32m$absolutePath\u001B[0m")
     }
 }
 
@@ -59,6 +59,7 @@ fun saveImage() {
 
     // images
     sh {
+        - "\u001B[33m上传图片...\u001B[0m"
         // 移动截图文件至images仓库，并对其重命名
         + "mv $capturesPath/$captureName $imagesPath/$imageName"
         // 提交至Github
@@ -79,6 +80,7 @@ fun saveImage() {
 fun publish(message: Array<String>) {
     // posts
     sh {
+        - "\u001B[33m提交文章...\u001B[0m"
         + "cd $postsPath"
         + "git add ."
         + "git commit -m '${formatCommit(message)}' |& cat"
@@ -86,6 +88,7 @@ fun publish(message: Array<String>) {
     }
     // website
     sh {
+        - "\u001B[33m重新构建...\u001B[0m"
         + "cd $rootPath"
         // 删除原先构建的文件
         + "rm -rf public/*"
@@ -94,14 +97,15 @@ fun publish(message: Array<String>) {
         // 提交至Github
         + "cd $websitePath"
         + "git add ."
-        + "git commit -m \$'重新构建：\n${formatCommit(message)}' |& cat"
+        + "git commit -m \$'重新构建：\n\n${formatCommit(message)}' |& cat"
         + "git push"
     }
     // blog
     sh {
+        - "\u001B[33m重新发布...\u001B[0m"
         + "cd $rootPath"
         + "git add ."
-        + "git commit -m \$'重新构建：\n${formatCommit(message)}' |& cat"
+        + "git commit -m \$'重新构建：\n\n${formatCommit(message)}' |& cat"
         + "git push"
     }
 }
@@ -120,7 +124,7 @@ fun formatCommit(message: Array<String>): String {
     } else {
         buildString {
             message.forEachIndexed { i, s ->
-                append("$i. $s；\n")
+                append("${i + 1}. $s；\n")
             }
         }
     }
@@ -155,8 +159,14 @@ class VirtualShell(
     private val commands = arrayListOf<String>()
 
 
+    // 自定义操作符'+'，用于追加需要执行的命令
     operator fun String.unaryPlus() {
         commands.add(this)
+    }
+
+    // 自定义操作符'-'，用于描述此次执行的任务
+    operator fun String.unaryMinus() {
+        println(this)
     }
 
 
@@ -228,5 +238,5 @@ class VirtualShell(
  * 在Shell环境下执行命令
  */
 fun sh(init: VirtualShell.() -> Unit) {
-    VirtualShell(true).apply(init).execute()
+    VirtualShell().apply(init).execute()
 }
