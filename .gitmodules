@@ -1,15 +1,9 @@
 [submodule "content/posts"]
 	path = content/posts
-	url = https://github.com/konanok/notes.git
+	url = https://github.com/konanok/posts.git
 [submodule "images"]
 	path = images
 	url = https://github.com/konanok/images.git
 [submodule "public"]
 	path = public
 	url = https://github.com/konanok/konanok.github.io.git
-[submodule "themes/ananke"]
-	path = themes/ananke
-	url = https://github.com/budparr/gohugo-theme-ananke.git
-[submodule "themes/my-hugo-PaperMod"]
-	path = themes/my-hugo-PaperMod
-	url = https://github.com/konanok/hugo-PaperMod
